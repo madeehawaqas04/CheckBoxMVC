@@ -1,0 +1,151 @@
+﻿@model List<HRManagementSystem.DomainObjects.EmailManagementModel>
+
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="company_selct">
+        <h1 class="h4 mb-4 text-center">Manage Company Email</h1>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="CompanyName">Company Name</label>
+                <select id="CompanyId" name="CompanyId" class="form-control company-dropdown">
+                    <option value="">Select a Company</option>
+                    @foreach (var companyName in ViewBag.CompanyList)
+                    {
+                        <option value="@companyName">@companyName</option>
+                    }
+                </select>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="box">
+    <div class="company-from table-responsive">
+        <table id="mngCompanyEmail" class="table table-striped table-bordered dt-responsive nowrap custom-table">
+
+            <thead>
+                <tr>
+                    <th class="center">
+                        S.No
+                    </th>
+                    <th class="center">
+                        Company Name
+                    </th>
+                    <th class="center">
+                        Email Type
+                    </th>
+                    <th class="center">
+                        Admin Allow
+                    </th>
+                    <th class="center">
+                        Company Allow
+                    </th>
+
+
+                    <th class="center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="center">
+                            @(((Int32)1) + Model.IndexOf(item))
+                        </td>
+                        <td class="center">
+                            @item.ComanyName
+                        </td>
+                        <td class="center">
+                            @item.EmailType
+                        </td>
+                        <td class="center">
+
+                            @Html.CheckBoxFor(modelItem => item.IsAdminAllow, new { @disabled = "disabled" })
+
+                        </td>
+                        <td class="center">
+                            @*@item.IsCampanyAllowEmail
+
+                                @Html.CheckBox("true")*@
+
+                            @if (item.IsCampanyAllowEmail)
+                            {
+                                @Html.CheckBoxFor(modelItem => item.IsCampanyAllowEmail, new { @disabled = "disabled" })
+                            }
+                            else
+                            {
+                                @Html.CheckBoxFor(modelItem => item.IsCampanyAllowEmail, new { @disabled = "disabled" })
+                            }
+
+                        </td>
+
+                        <td class="center">
+                            @{
+                                bool status = @item.IsAdminAllow;
+                                string StatusToShow = (status == true) ? "Deactivate Service" : "Activate Service";
+                            }
+
+                            @Html.ActionLink(StatusToShow, "ChangeEmailStatus", new { id = item.Id })
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+        <div class="modal" id="ConfirmModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        @ViewBag.Result
+                        @ViewBag.Message
+                        @{
+                            if (ViewBag.Message != null)
+                            {
+                                @Html.ActionLink("Confirm", "ConfirmChangeStatus", new { emId = ViewBag.emId }, new { @class = "link-button label label-success" })      
+
+                                @Html.ActionLink("Cancel", "CancelChangeStatus", new { @class = "link-button label label-warning" })
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" language="javascript" src="/Scripts/common.js"></script>
+@section Scripts{
+    <script>
+
+           if ('@ViewBag.Message' != '')
+            {
+                 $("#ConfirmModal").modal("show")
+            }
+
+        $(document).ready(function () {
+            var table = $('#mngCompanyEmail').DataTable({ "pageLength": 50 });
+
+            $('.company-dropdown').change(function () {
+                var selectedCompany = $(this).val();
+
+                if (selectedCompany === '') {
+                    table.columns(1).search('').draw();
+                } else {
+                    table.columns(1).search(selectedCompany).draw();
+                }
+            });
+
+
+
+        });
+    </script>
+}
+

@@ -1,0 +1,123 @@
+﻿@model List<HRManagementSystem.DomainObjects.EmailTypeModel>
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="row justify-content-center comp-box">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+
+            <h1 class="h4 mb-4 text-center">Email Setting</h1>
+            <div class="form-horizontal company-from">
+                <div class="col-md-12 control-label">
+                    @ViewBag.AccError
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @*@Html.LabelFor(model => model.Company)
+                            @Html.DropDownListFor(model => model.FkCompanyId, Model.Company, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.FkCompanyId)*@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group company-checkbox">
+
+
+                    <div class="col-md-12">
+                        @Html.Label("Email Type", new { @class = "pb-2" })
+                        @*@foreach (var item in Model)
+                        {
+                            <div class="custom-control custom-checkbox">
+                                <label>
+                                    <input class="custom-control-input" type="checkbox" name="EmailTypes"
+               value="@item.Id" checked="@item.Selected" />
+        <span class="custom-control-label"> @item.Name</span>
+
+
+                                    @Html.HiddenFor(m => @item.Id)
+                                    @Html.HiddenFor(m => @item.Name)<br />
+
+                                </label>
+                            </div>
+
+                        }*@
+
+
+                        @for (int i = 0; i < Model.Count(); i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.CheckBoxFor(m => m[i].Selected)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => m[i].Name)
+                                    @Html.HiddenFor(m => m[i].Id)
+                                </td>
+                            </tr>
+                        }
+
+                    </div>
+
+
+                </div>
+
+
+                @*<div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Label("Email Type")
+
+                                @foreach (var item in Model.EmailTypes)
+                                {
+                                    <div class="radio">
+                                        <label>
+                                            <input class="input" type="radio" name="FkEmailTypeId"
+                                                   value="@item.Value" checked="@item.Selected" />
+                                            <span class="text"> @item.Text</span>
+                                        </label>
+                                    </div>
+
+
+                                    @Html.CheckBox(@item.Value, new { @class = "custom-control-input" })
+                    @Html.Label(@item.Text, new { @class = "custom-control-label" })
+
+                                    @Html.RadioButtonFor(m => m.FkEmailTypeId, "Yes", new { id = @item.Value })
+                    @Html.Label("compatible", @item.Text)
+
+                                }
+
+
+                                @Html.ValidationMessageFor(model => model.FkEmailTypeId)
+                            </div>
+                        </div>*@
+
+
+            <div class="form-row">
+                <div class="col-sm-2">
+                    <div class=" btn btn-theme-gr bg-danger">
+                        @Html.ActionLink("Back to List", "Index")
+                    </div>
+                </div>
+                <div class="col-sm-7 d-flex justify-content-center">
+                    <input type="submit" class="btn btn-theme-gr" value="Create" />
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+}
+
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+

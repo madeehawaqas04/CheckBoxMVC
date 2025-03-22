@@ -1,0 +1,270 @@
+﻿@model List<HRManagementSystem.DomainObjects.EmailManagementModel>
+
+
+
+@{
+    ViewBag.Title = "Manage";
+    Layout = "~/Views/Shared/_LayoutCompany.cshtml";
+}
+
+@if (Model.Count == 0)
+{<div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="h1 mb-4 text-center text-danger pt-5"><strong>Contact Administrator For Activate Email Service </strong></h1>
+                </div>
+            </div>
+    </div>
+                }
+                else
+                {
+
+                <section>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1 class="h4 mb-4 text-center"><strong>Manage Email Setting </strong></h1>
+
+                                <div class="col-12">
+                                    <div class="atten-box">
+                                        <div class="col-12">
+                                            <div class="box-content big-table table-responsive">
+
+                                                <table id="viewHoly" class="table table-striped table-bordered dt-responsive nowrap custom-table dataTable no-footer dtr-inline">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="center">
+                                                                S.No
+                                                            </th>
+                                                            <th class="center">
+                                                                Company Name
+                                                            </th>
+                                                            <th class="center">
+                                                                Email Type
+                                                            </th>
+                                                            <th class="center">
+                                                                Admin Allow
+                                                            </th>
+                                                            <th class="center">
+                                                                Company Allow
+                                                            </th>
+
+
+                                                            <th class="center">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            <tr>
+                                                                <td class="center">
+                                                                    @(((Int32)1) + Model.IndexOf(item))
+                                                                </td>
+                                                                <td class="center">
+                                                                    @item.ComanyName
+                                                                </td>
+                                                                <td class="center">
+                                                                    @item.EmailType
+                                                                </td>
+                                                                <td class="center">
+
+                                                                    @Html.CheckBoxFor(modelItem => item.IsAdminAllow, new { @disabled = "disabled" })
+
+                                                                </td>
+                                                                <td class="center">
+
+                                                                    @if (item.IsCampanyAllowEmail)
+                                                                    {
+                                                                        @Html.CheckBoxFor(modelItem => item.IsCampanyAllowEmail, new { @disabled = "disabled" })
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @Html.CheckBoxFor(modelItem => item.IsCampanyAllowEmail, new { @disabled = "disabled" })
+                                                                    }
+
+                                                                </td>
+
+                                                                <td class="center">
+                                                                    @*@{
+                                                                            bool status = @item.IsCampanyAllowEmail;
+                                                                            string StatusToShow = (status == true) ? "Deactivate Service" : "Activate Service";
+                                                                        }*@
+
+                                                                    @if (@item.IsCampanyAllowEmail == true)
+                                                                    {
+                                                                        <a href="javascript:void(0);" onclick="confirmDelete(@item.Id)">Deactivate Service</a>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <a href="javascript:void(0);" onclick="confirmDelete(@item.Id)">Activate Service</a>
+                                                                    }
+
+                                                                    @* @Html.ActionLink(StatusToShow, "ChangeCompEmailStatus", new { id = item.Id })*@
+
+                                                                    @*<a href="javascript:void(0);" onclick="confirmDelete(@item.Id)">Delete</a>*@
+                                                                </td>
+
+                                                            </tr>
+                                                        }
+
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                @*<div class="box">
+                        <div class="company-from table-responsive">
+                            <table id="mngCompanyEmail" class="table table-striped table-bordered dt-responsive nowrap custom-table">
+
+                                <thead>
+                                    <tr>
+                                        <th class="center">
+                                            S.No
+                                        </th>
+                                        <th class="center">
+                                            Company Name
+                                        </th>
+                                        <th class="center">
+                                            Email Type
+                                        </th>
+                                        <th class="center">
+                                            Admin Allow
+                                        </th>
+                                        <th class="center">
+                                            Company Allow
+                                        </th>
+
+
+                                        <th class="center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="center">
+                                                @(((Int32)1) + Model.IndexOf(item))
+                                            </td>
+                                            <td class="center">
+                                                @item.ComanyName
+                                            </td>
+                                            <td class="center">
+                                                @item.EmailType
+                                            </td>
+                                            <td class="center">
+
+                                                @Html.CheckBoxFor(modelItem => item.IsAdminAllow, new { @disabled = "disabled" })
+
+                                            </td>
+                                            <td class="center">
+
+                                                @if (item.IsCampanyAllowEmail)
+                                                {
+                                                    @Html.CheckBoxFor(modelItem => item.IsCampanyAllowEmail, new { @disabled = "disabled" })
+                                                }
+                                                else
+                                                {
+                                                    @Html.CheckBoxFor(modelItem => item.IsCampanyAllowEmail, new { @disabled = "disabled" })
+                                                }
+
+                                            </td>
+
+                                            <td class="center">
+                                                @{
+                                                    bool status = @item.IsCampanyAllowEmail;
+                                                    string StatusToShow = (status == true) ? "Deactivate Service" : "Activate Service";
+                                                }
+
+                                                @Html.ActionLink(StatusToShow, "ChangeCompEmailStatus", new { id = item.Id })
+
+                                                <a href="javascript:void(0);" onclick="confirmDelete(item.id)">Delete</a>
+                                            </td>
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+
+                            <div class="modal" id="ConfirmModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            @ViewBag.Result
+                                            @ViewBag.Message
+                                            @{
+                                                if (ViewBag.Message != null)
+                                                {
+                                                    @Html.ActionLink("Confirm", "ConfirmCompChangeStatus", new { emId = ViewBag.emId }, new { @class = "link-button label label-success" })
+
+                                                    @Html.ActionLink("Cancel", "CancelChangeStatus", new { @class = "link-button label label-warning" })
+                                                }
+                                            }
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                }
+
+
+
+
+                @*<script type="text/javascript" language="javascript" src="/Scripts/common.js"></script>*@
+                @section Scripts{
+                    <script>
+
+           @*if ('@ViewBag.Message' != '')
+            {
+                 $("#ConfirmModal").modal("show")
+            }*@
+
+        $(document).ready(function () {
+            var table = $('#mngCompanyEmail').DataTable({ "pageLength": 50 });
+
+            $('.company-dropdown').change(function () {
+                var selectedCompany = $(this).val();
+
+                if (selectedCompany === '') {
+                    table.columns(1).search('').draw();
+                } else {
+                    table.columns(1).search(selectedCompany).draw();
+                }
+            });
+
+
+
+        });
+                    </script>
+
+
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    <script>
+                        function confirmDelete(id) {
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                //text: 'You won\'t be able to revert this!',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, want it!'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = '/EmailManagement/ConfirmCompChangeStatus/' + id;
+                                }
+                            });
+                        }
+
+                    </script>
+                }
+

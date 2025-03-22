@@ -1,0 +1,123 @@
+﻿@*@model List<HRManagementSystem.DomainObjects.EmailTypeModel>*@
+@model HRManagementSystem.DomainObjects.EmailManagementModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="row justify-content-center comp-box">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+
+            <h1 class="h4 mb-4 text-center">Email Setting</h1>
+            <div class="form-horizontal company-from">
+                <div class="col-md-12 control-label">
+                    @ViewBag.AccError
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Company)
+                            @Html.DropDownListFor(model => model.FkCompanyId, Model.Company, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.FkCompanyId)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group company-checkbox">
+
+                    <div class="col-md-12">
+
+                        @Html.Label("Email Type", new { @class = "pb-2" })
+
+                        </div>
+                        <div class="col-md-12" id="EmailTypesId">
+                            @for (int i = 0; i < Model.EmailTypes.Count(); i++)
+                            {
+                                <div class="custom-control custom-checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(m => m.EmailTypes[i].Selected, new { @class = "custom-control-input" })
+                                        <span class="custom-control-label"> @Model.EmailTypes[i].Name</span>
+
+                                        @Html.HiddenFor(m => m.EmailTypes[i].Id)
+
+                                        @Html.HiddenFor(m => m.EmailTypes[i].Name)
+                                    </label>
+                                </div>
+                            }
+
+                        </div>
+
+
+                    </div>
+
+                <div class="form-row">
+                    <div class="col-sm-2">
+                        <div class=" btn btn-theme-gr bg-danger">
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                    </div>
+                    <div class="col-sm-7 d-flex justify-content-center">
+                        <input type="submit" class="btn btn-theme-gr" value="Create" />
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+   
+}
+
+
+<script type="text/javascript">
+                $(document).ready(function () {
+                    $("#FkCompanyId").change(function () {
+                        //document.getElementById("SPprefix").style.display = "inline";
+                        //alert($("#FkCompanyId").val());
+                            $.ajax({
+                                url: '@Url.Action("GetEmailType", "EmailManagement")',
+                                type: 'GET',
+                                dataType: 'json',
+                                data: { CompanyId: $("#FkCompanyId").val() },
+                                contentType: 'application/json; charset=utf-8',
+                                success: function (list) {
+                                    $("#EmailTypesId").empty();
+
+                                   // $('#AREAID').append($('<option></option>').val("0").html("------Select------"));
+                                    for (var i = 0; i < list.length; i++) {
+
+                                        // $("#EmailTypesId").append("<input type='checkbox' id=" + list[i].Id + " name='EmailTypes' value=" + list[i].Id + "  /><label>" + list[i].Name + "</label>");
+
+                                        $("#EmailTypesId").append("<div class='custom-control custom-checkbox'><label>" +
+                                            "<input class='custom-control-input' type='checkbox' id=" + list[i].Id + " name='EmailTypes' value=" + list[i].Id + "  /><span  class='custom-control-label'>" + list[i].Name + "</span></label > </div >");
+
+                                    }
+
+                                    for (var i = 0; i < list.length; i++) {
+                                        if (list[i].Selected == true) {
+                                            $("#" + list[i].Id + "")[0].checked = true;
+                                        }
+                                    }
+
+                                }
+                            });
+                        }
+                   );
+                });
+
+
+</script>
+
+
+
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+

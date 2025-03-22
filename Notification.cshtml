@@ -1,0 +1,308 @@
+﻿@model HRManagementSystem.DomainObjects.EmailSettingModel
+
+
+@{
+    ViewBag.Title = "AccountEmail";
+    Layout = "~/Views/Shared/_LayoutCompany.cshtml";
+}
+
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                @*@using (Html.BeginForm())
+                    {*@
+                @*@Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)*@
+
+                <div class="both-set">
+                    <h2 class="text-center"><strong>Notification</strong></h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        @{
+                            if (ViewBag.error != null || ViewBag.result != null)
+                            {
+                                    <div class="center e-msg e-msg-style">
+                                        @ViewBag.error
+                                        @ViewBag.result
+                                    </div>
+                            }
+                        }
+
+                        <div class="full-radius company-from atten-box py-4 mt-3 rounded">
+                            <div id="content" class="row align-items-center justify-content-center">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="invisible">Check box</label>
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("IsPayrollEmail", new { id = "IsPayrollEmail", @class = "custom-control-input" })
+                                            @Html.LabelFor(model => model.IsPayrollEmail, new { @class = "custom-control-label" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label("Enter Comma Separated Email") <span style="color:red;padding-left:3px"> (abc@gmail.com,def@yahoo.com) </span>
+                                        @* @Html.TextBoxFor(model => model.PayrollEmail, new { @class = "form-control" })*@
+
+                                        @(Model.IsPayrollEmail == true ?
+  @Html.TextBoxFor(m => m.PayrollEmail, new {@class = "form-control" }) :
+  @Html.TextBoxFor(m => m.PayrollEmail, new { @disabled = "disabled", @class = "form-control" })
+)
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="invisible">Submit</label>
+                                        <input type="submit" id="btnPayroll" class="btn btn-primary btn-theme btn-block" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="full-radius company-from atten-box py-4  mt-3 rounded">
+                            <div id="content" class="row align-items-center justify-content-center">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="invisible">Check box</label>
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("IsLeaveEmail", new { @class = "custom-control-input" })
+                                            @Html.LabelFor(model => model.IsLeaveEmail, new { @class = "custom-control-label" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label("Enter Comma Separated Email")
+                                        @* @Html.TextBoxFor(model => model.LeaveEmail, new { @class = "form-control" })*@
+                                        @(Model.IsLeaveEmail == true ?
+  @Html.TextBoxFor(m => m.LeaveEmail, new {@class = "form-control" }) :
+  @Html.TextBoxFor(m => m.LeaveEmail, new { @disabled = "disabled", @class = "form-control" })
+)
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="invisible">Submit</label>
+                                        <input type="submit" id="btnLeave" class="btn btn-primary btn-theme btn-block" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="full-radius company-from atten-box py-4  mt-3 rounded">
+                            <div id="content" class="row align-items-center justify-content-center">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="invisible">Check box</label>
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("IsAttendanceSummary", new { @class = "custom-control-input" })
+                                            @Html.LabelFor(model => model.IsAttendanceSummary, new { @class = "custom-control-label" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.Label("Enter Comma Separated Email")
+                                        @* @Html.TextBoxFor(model => model.AttendanceSummaryEmail, new { @class = "form-control" })*@
+                                        @(Model.IsAttendanceSummary == true ?
+  @Html.TextBoxFor(m => m.AttendanceSummaryEmail, new {@class = "form-control" }) :
+  @Html.TextBoxFor(m => m.AttendanceSummaryEmail, new { @disabled = "disabled", @class = "form-control" })
+)
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="invisible">Submit</label>
+                                        <input type="submit" id="btnAttendance" class="btn btn-primary btn-theme btn-block" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="full-radius company-from atten-box py-4  mt-3 rounded">
+                            <div id="content" class="row align-items-center justify-content-center">
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label class="invisible">Check box</label>
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("IsLateComerEmail", new { @class = "custom-control-input" })
+                                            @Html.LabelFor(model => model.IsLateComerEmail, new { @class = "custom-control-label" })
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="col-md-6">
+                    <div class="form-group">
+                        @Html.Label("Enter Comma Separated Email")
+                        @Html.TextBoxFor(model => model.PayrollEmail, new { @class = "form-control" })
+                    </div>
+                </div>*@
+
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="invisible">Submit</label>
+                                        <input type="submit" id="btnLateComer" class="btn btn-primary btn-theme btn-block" value="Save" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#IsPayrollEmail').change(function () {
+            if (this.checked) {
+                $('#PayrollEmail').attr("disabled", false);
+            }
+            else {
+                $('#PayrollEmail').attr("disabled", true);
+            }
+        });
+
+        $('#IsLeaveEmail').change(function () {
+            if (this.checked) {
+                $('#LeaveEmail').attr("disabled", false);
+            }
+            else {
+                $('#LeaveEmail').attr("disabled", true);
+            }
+        });
+
+
+        $('#IsAttendanceSummary').change(function () {
+            if (this.checked) {
+                $('#AttendanceSummaryEmail').attr("disabled", false);
+            }
+            else {
+                $('#AttendanceSummaryEmail').attr("disabled", true);
+            }
+        });
+
+
+        function SaveData(Type, Email, IsEmailAllow) {
+
+            $.ajax({
+            url: '@Url.Action("SaveNotificationData", "Login")',
+            type: 'POST',
+            data: { Type: Type, Email: Email, IsEmailAllow: IsEmailAllow },
+            success: function (data) {
+            if (data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: Type + ' setting saved successfully!',
+            });
+        }
+        console.log(data);
+    },
+    error: function (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to saved Notification, An error occurred while processing your request. Please try again.',
+        });
+        console.error(error);
+    }
+});
+        }
+
+        $("#btnPayroll").click(function () {
+            var Type = "PayrollEmail";
+            var Email = $('#PayrollEmail').val();
+            var IsEmailAllow = $('#IsPayrollEmail').is(":checked");
+
+
+            SaveData(Type, Email, IsEmailAllow);
+
+           } );
+
+
+                    $("#btnLeave").click(function () {
+                        var Type = "LeaveEmail";
+                        var Email = $('#LeaveEmail').val();
+                        var IsEmailAllow = $('#IsLeaveEmail').is(":checked");
+
+
+                        SaveData(Type, Email, IsEmailAllow);
+
+         @*$.ajax({
+             url: '@Url.Action("SaveData", "Login")',
+             type: 'GET',
+             dataType: 'json',
+             data: { Type: "LeaveEmail", Email: $('#LeaveEmail').val(), IsEmailAllow: $('#IsLeaveEmail').is(":checked") },
+             contentType: 'application/json; charset=utf-8',
+             success: function (list) {
+
+             }
+         });*@
+     });
+
+
+                    $("#btnAttendance").click(function () {
+
+                        var Type = "AttendanceSummaryEmail";
+                        var Email = $('#AttendanceSummaryEmail').val();
+                        var IsEmailAllow = $('#IsAttendanceSummary').is(":checked");
+
+
+                        SaveData(Type, Email, IsEmailAllow);
+
+         @*$.ajax({
+             url: '@Url.Action("SaveData", "Login")',
+             type: 'GET',
+             dataType: 'json',
+             data: { Type: "AttendanceSummaryEmail", Email: $('#AttendanceSummaryEmail').val(), IsEmailAllow: $('#IsAttendanceSummary').is(":checked") },
+             contentType: 'application/json; charset=utf-8',
+             success: function (list) {
+
+             }
+         });*@
+     } );
+
+
+
+                    $("#btnLateComer").click(function () {
+
+                        var Type = "LateComerEmail";
+                        var Email = "";
+                        var IsEmailAllow = $('#IsLateComerEmail').is(":checked");
+
+
+                        SaveData(Type, Email, IsEmailAllow);
+
+    @*$.ajax({
+        url: '@Url.Action("SaveData", "Login")',
+        type: 'GET',
+        dataType: 'json',
+        data: { Type: "LateComerEmail", Email: "", IsEmailAllow: $('#IsLateComerEmail').is(":checked") },
+        contentType: 'application/json; charset=utf-8',
+        success: function (list) {
+
+        }
+    });*@
+});
+});
+
+
+</script>
